@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Business XL – Marco Doorakkers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --bg2: #f5f5f7;
+      --bg3: #000000;
+      --text: #1d1d1f;
+      --text2: #6e6e73;
+      --text3: #86868b;
+      --blue: #0071e3;
+      --blue-hover: #0077ed;
+      --line: rgba(0,0,0,0.08);
+      --radius: 18px;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.5;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 52px;
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 max(22px, 4vw);
+    }
+
+    .nav-brand {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--text2);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--blue);
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+
+    .nav-cta:hover { opacity: 0.75; }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px max(22px, 8vw) 80px;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-noise {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0,113,227,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(0,113,227,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--blue);
+      letter-spacing: 0.01em;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.1s both;
+    }
+
+    .hero-title {
+      font-size: clamp(2.8rem, 7vw, 6.5rem);
+      font-weight: 700;
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      max-width: 900px;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+
+    .hero-title .highlight {
+      background: linear-gradient(135deg, #0071e3 0%, #34aadc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+      font-weight: 300;
+      color: var(--text2);
+      max-width: 620px;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.35s both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.5s both;
+    }
+
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--blue);
+      color: #fff;
+      padding: 0.75rem 1.8rem;
+      border-radius: 980px;
+      font-size: 0.95rem;
+      font-weight: 400;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-pill:hover { background: var(--blue-hover); transform: scale(1.02); }
+
+    .btn-pill-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: transparent;
+      color: var(--blue);
+      padding: 0.75rem 1.8rem;
+      border-radius: 980px;
+      font-size: 0.95rem;
+      font-weight: 400;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-pill-ghost:hover { background: rgba(0,113,227,0.06); }
+
+    .hero-photo-wrap {
+      margin-top: 5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.7s both;
+    }
+
+    .hero-photo {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top;
+      box-shadow:
+        0 2px 6px rgba(0,0,0,0.08),
+        0 16px 32px rgba(0,0,0,0.12),
+        0 0 0 4px rgba(255,255,255,1),
+        0 0 0 5px rgba(0,113,227,0.15);
+    }
+
+    /* ─── STATS STRIP ─── */
+    #stats {
+      background: var(--bg2);
+      padding: 56px max(22px,8vw);
+    }
+
+    .stats-inner {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .stat-cell {
+      background: var(--bg2);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+
+    .stat-big {
+      font-size: clamp(2.5rem, 4vw, 3.8rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .stat-big sup {
+      font-size: 0.45em;
+      font-weight: 600;
+      vertical-align: super;
+    }
+
+    .stat-sub {
+      font-size: 0.85rem;
+      color: var(--text2);
+      margin-top: 0.4rem;
+      font-weight: 400;
+    }
+
+    /* ─── GENERIC SECTION ─── */
+    .apple-section {
+      padding: 120px max(22px, 8vw);
+      text-align: center;
+    }
+
+    .apple-section.left-align { text-align: left; }
+
+    .apple-section .kicker {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--blue);
+      letter-spacing: 0.01em;
+      margin-bottom: 0.75rem;
+    }
+
+    .apple-section h2 {
+      font-size: clamp(2rem, 4.5vw, 3.6rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.06;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .apple-section .lead {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      font-weight: 300;
+      color: var(--text2);
+      max-width: 640px;
+      margin: 0 auto 3rem;
+      line-height: 1.65;
+    }
+
+    .apple-section.left-align .lead { margin-left: 0; }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--bg3);
+      color: #fff;
+    }
+
+    #about .kicker { color: #34aadc; }
+
+    #about h2 { color: #f5f5f7; }
+
+    #about .lead { color: rgba(245,245,247,0.65); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .about-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 2rem;
+    }
+
+    .chip {
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(245,245,247,0.85);
+      font-size: 0.82rem;
+      font-weight: 400;
+      padding: 0.45rem 1rem;
+      border-radius: 980px;
+      backdrop-filter: blur(4px);
+    }
+
+    .about-copy {
+      font-size: 1.05rem;
+      color: rgba(245,245,247,0.6);
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .about-copy strong {
+      color: #f5f5f7;
+      font-weight: 500;
+    }
+
+    /* ─── SERVICES ─── */
+    #services { background: var(--bg); }
+
+    .services-bento {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .bento-card {
+      background: var(--bg2);
+      border-radius: var(--radius);
+      padding: 2.2rem;
+      text-align: left;
+      transition: transform 0.3s cubic-bezier(.25,.46,.45,.94), box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bento-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+
+    .bento-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+    }
+
+    .bento-card:hover::before {
+      border-color: rgba(0,113,227,0.2);
+    }
+
+    .bento-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #0071e3, #34aadc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+      font-size: 1.2rem;
+    }
+
+    .bento-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .bento-desc {
+      font-size: 0.88rem;
+      color: var(--text2);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    /* ─── MARQUEE STRIP ─── */
+    #marquee-section {
+      padding: 0;
+      background: var(--bg2);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 3rem;
+      padding: 1.4rem 0;
+      width: max-content;
+      animation: marquee 22s linear infinite;
+    }
+
+    .marquee-item {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text3);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .marquee-dot {
+      color: var(--blue);
+      font-size: 1rem;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--bg); }
+
+    .contact-card {
+      max-width: 760px;
+      margin: 0 auto;
+      background: var(--bg2);
+      border-radius: 28px;
+      padding: 3.5rem;
+      text-align: left;
+    }
+
+    .contact-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-info-block .info-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text3);
+      margin-bottom: 0.4rem;
+    }
+
+    .contact-info-block a,
+    .contact-info-block p {
+      font-size: 0.95rem;
+      color: var(--text);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .contact-info-block a { color: var(--blue); }
+    .contact-info-block a:hover { text-decoration: underline; }
+
+    .apple-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .apple-input {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+      font-family: var(--font);
+      font-size: 0.95rem;
+      color: var(--text);
+      outline: none;
+      width: 100%;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .apple-input::placeholder { color: var(--text3); }
+
+    .apple-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(0,113,227,0.15);
+    }
+
+    textarea.apple-input { resize: vertical; min-height: 110px; }
+
+    .submit-row { margin-top: 0.5rem; }
+
+    .btn-submit {
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 980px;
+      padding: 0.85rem 2.2rem;
+      font-family: var(--font);
+      font-size: 0.95rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-submit:hover { background: var(--blue-hover); transform: scale(1.02); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--line);
+      padding: 2.5rem max(22px, 8vw);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--text3);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--text3);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover { color: var(--blue); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .services-bento { grid-template-columns: 1fr 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .stats-inner { grid-template-columns: 1fr; gap: 0; }
+      .contact-top { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+
+    @media (max-width: 640px) {
+      .services-bento { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero-actions { flex-direction: column; align-items: center; }
+      .form-row-2 { grid-template-columns: 1fr; }
+      .contact-card { padding: 2rem 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-brand">Business XL</a>
+    <ul class="nav-links">
+      <li><a href="#about">Over mij</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Neem contact op ›</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-noise"></div>
+    <p class="hero-eyebrow">Project Management · Change Management · SAP</p>
+    <h1 class="hero-title">
+      Projecten die<br><span class="highlight">écht werken.</span>
+    </h1>
+    <p class="hero-sub">
+      27+ jaar ervaring in SAP-implementaties, global rollouts en change management. Ik zorg dat uw organisatie vooruitgaat — met precisie, rust en een glimlach.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-pill">Neem contact op</a>
+      <a href="#services" class="btn-pill-ghost">Bekijk mijn services ›</a>
+    </div>
+    <div class="hero-photo-wrap">
+      <img
+        class="hero-photo"
+        src="https://business-xl.nl/wp-content/uploads/2025/10/headshot-Marco-Doorakkers-020-scaled.jpg"
+        alt="Marco Doorakkers"
+      />
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div id="marquee-section">
+    <div class="marquee-track">
+      <span class="marquee-item">SAP</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">PRINCE2</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">SCRUM</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Change Management</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Global Rollouts</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Agile</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Stakeholder Management</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Process Optimization</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">SDLC</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Leadership</span><span class="marquee-dot">·</span>
+      <!-- duplicate for seamless loop -->
+      <span class="marquee-item">SAP</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">PRINCE2</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">SCRUM</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Change Management</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Global Rollouts</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Agile</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Stakeholder Management</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Process Optimization</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">SDLC</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Leadership</span><span class="marquee-dot">·</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stats-inner reveal">
+      <div class="stat-cell">
+        <div class="stat-big">27<sup>+</sup></div>
+        <div class="stat-sub">Jaar SAP-ervaring</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-big">50<sup>+</sup></div>
+        <div class="stat-sub">Voltooide projecten</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-big">100<sup>%</sup></div>
+        <div class="stat-sub">Commitment</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="apple-section">
+    <div class="about-grid">
+      <div class="reveal">
+        <p class="kicker">Over mij</p>
+        <h2 style="color:#f5f5f7; font-size: clamp(1.8rem, 3.5vw, 3rem); margin-bottom: 1.5rem;">Marco Doorakkers</h2>
+        <p class="about-copy">
+          Als <strong>ervaren SAP Project Manager en Change Manager</strong> begeleid ik organisaties bij complexe implementaties en globale rollouts. Mijn kracht ligt in het verbinden van mensen, processen en technologie.
+        </p>
+        <br>
+        <p class="about-copy">
+          Altijd met oog voor het menselijke aspect van verandering — want technologie werkt alleen als mensen het omarmen.
+        </p>
+      </div>
+      <div class="reveal" style="animation-delay: 0.15s">
+        <p style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(245,245,247,0.4); margin-bottom: 1rem;">Competenties</p>
+        <div class="about-chips">
+          <span class="chip">SAP Project Management</span>
+          <span class="chip">Change Management</span>
+          <span class="chip">Global Template Design</span>
+          <span class="chip">Agile / SCRUM</span>
+          <span class="chip">Validated Systems (SDLC)</span>
+          <span class="chip">Process Optimization</span>
+          <span class="chip">Stakeholder Management</span>
+          <span class="chip">PRINCE2</span>
+          <span class="chip">Leadership</span>
+          <span class="chip">Teamwork</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="apple-section">
+    <p class="kicker reveal">Wat ik doe</p>
+    <h2 class="reveal">Services die het<br>verschil maken.</h2>
+    <p class="lead reveal">Op basis van 27+ jaar praktijkervaring bied ik een gerichte set diensten aan — van strategie tot uitvoering.</p>
+
+    <div class="services-bento">
+      <div class="bento-card reveal">
+        <div class="bento-icon">🗂️</div>
+        <div class="bento-title">Project Management</div>
+        <p class="bento-desc">Globale, regionale en lokale projecten — on-site of volledig remote met internationale teams. Van initiatie tot go-live.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon">🔄</div>
+        <div class="bento-title">Change Management</div>
+        <p class="bento-desc">Succesvolle verandering begint bij mensen. Ik zorg voor draagvlak, communicatie en adoptie.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon">💡</div>
+        <div class="bento-title">Business Consulting</div>
+        <p class="bento-desc">Requirementsanalyse, procesverbetering en documentatie. Ik identificeer en realiseer verbeterpotentieel.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon">👥</div>
+        <div class="bento-title">People Management</div>
+        <p class="bento-desc">Projecten draaien op mensen. Ik bouw gemotiveerde teams en haal het beste uit elk teamlid.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon">🔍</div>
+        <div class="bento-title">Project Audits</div>
+        <p class="bento-desc">Project governance, escalatiemodellen, tooling en methodologie. Ik denk met u mee over elke uitdaging.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon">⚙️</div>
+        <div class="bento-title">SAP Implementaties</div>
+        <p class="bento-desc">Gevalideerde systeemomgevingen, SDLC en globale SAP-rollouts. Bewezen aanpak voor complexe trajecten.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="apple-section">
+    <p class="kicker reveal">Contact</p>
+    <h2 class="reveal">Laten we kennismaken.</h2>
+    <p class="lead reveal">Heeft u een project, uitdaging of vraag? Ik denk graag met u mee.</p>
+
+    <div class="contact-card reveal">
+      <div class="contact-top">
+        <div>
+          <div class="contact-info-block" style="margin-bottom: 1.5rem;">
+            <p class="info-label">E-mail</p>
+            <a href="mailto:marco.doorakkers@business-xl.nl">marco.doorakkers@business-xl.nl</a>
+          </div>
+          <div class="contact-info-block" style="margin-bottom: 1.5rem;">
+            <p class="info-label">LinkedIn</p>
+            <a href="https://www.linkedin.com/in/marcodoorakkers/" target="_blank">linkedin.com/in/marcodoorakkers</a>
+          </div>
+          <div class="contact-info-block">
+            <p class="info-label">Website</p>
+            <a href="https://business-xl.nl">business-xl.nl</a>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:center;">
+          <img
+            src="https://business-xl.nl/wp-content/uploads/2025/10/headshot-Marco-Doorakkers-020-scaled.jpg"
+            alt="Marco Doorakkers"
+            style="width:120px; height:120px; border-radius:50%; object-fit:cover; object-position:top; box-shadow:0 4px 20px rgba(0,0,0,0.12);"
+          />
+        </div>
+      </div>
+
+      <form class="apple-form" action="mailto:marco.doorakkers@business-xl.nl" method="post" enctype="text/plain">
+        <div class="form-row-2">
+          <input class="apple-input" type="text" name="naam" placeholder="Uw naam" required />
+          <input class="apple-input" type="email" name="email" placeholder="uw@email.nl" required />
+        </div>
+        <input class="apple-input" type="text" name="onderwerp" placeholder="Onderwerp" />
+        <textarea class="apple-input" name="bericht" placeholder="Vertel me over uw project of uitdaging…"></textarea>
+        <div class="submit-row">
+          <button type="submit" class="btn-submit">Verstuur bericht</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-copy">Copyright © 2026 Business XL – Marco Doorakkers. Alle rechten voorbehouden.</p>
+      <ul class="footer-links">
+        <li><a href="https://www.linkedin.com/in/marcodoorakkers/" target="_blank">LinkedIn</a></li>
+        <li><a href="mailto:marco.doorakkers@business-xl.nl">E-mail</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- SCROLL REVEAL -->
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
