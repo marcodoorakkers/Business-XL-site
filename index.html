@@ -207,22 +207,26 @@
     .btn-pill-ghost:hover { background: rgba(0,113,227,0.06); }
 
     .hero-photo-wrap {
-      margin-top: 5rem;
-      opacity: 0;
-      animation: fadeUp 1s ease 0.7s both;
+      display: none;
     }
 
     .hero-photo {
-      width: 200px;
-      height: 200px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       object-fit: cover;
       object-position: top;
       box-shadow:
-        0 2px 6px rgba(0,0,0,0.08),
-        0 16px 32px rgba(0,0,0,0.12),
-        0 0 0 4px rgba(255,255,255,1),
-        0 0 0 5px rgba(0,113,227,0.15);
+        0 2px 6px rgba(0,0,0,0.12),
+        0 8px 24px rgba(0,0,0,0.18),
+        0 0 0 3px rgba(255,255,255,0.15);
+      flex-shrink: 0;
+    }
+
+    .about-photo-wrap {
+      display: flex;
+      align-items: flex-start;
+      padding-top: 0.4rem;
     }
 
 
@@ -341,11 +345,12 @@
 
     .about-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
+      grid-template-columns: auto 1fr 1fr;
+      gap: 4rem;
       max-width: 1100px;
       margin: 0 auto;
       text-align: left;
+      align-items: start;
     }
 
     .about-chips {
@@ -691,7 +696,8 @@
     @media (max-width: 900px) {
       .services-bento { grid-template-columns: 1fr 1fr; }
       .bento-full { grid-column: span 2; }
-      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .about-photo-wrap { justify-content: center; }
       .stats-inner { grid-template-columns: 1fr; gap: 0; }
       .contact-top { grid-template-columns: 1fr; gap: 1.5rem; }
       .producten-grid { grid-template-columns: 1fr 1fr; }
@@ -951,6 +957,17 @@
 
   <!-- SCROLL REVEAL -->
   <script>
+    // Verplaats portretfoto van hero naar about-sectie
+    (function() {
+      var photoWrap = document.querySelector('.hero-photo-wrap');
+      var aboutGrid = document.querySelector('#about .about-grid');
+      if (photoWrap && aboutGrid) {
+        photoWrap.classList.add('about-photo-wrap', 'reveal');
+        photoWrap.style.display = '';
+        aboutGrid.insertBefore(photoWrap, aboutGrid.firstChild);
+      }
+    })();
+
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {
