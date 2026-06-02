@@ -482,9 +482,16 @@
     }
 
     .product-logo {
-      font-size: 2.2rem;
-      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      margin-bottom: 0.4rem;
     }
+    .product-logo.tst { background: #eff6ff; }
+    .product-logo.nmpk { background: #fffbeb; }
 
     .product-name {
       font-size: 1.15rem;
@@ -874,18 +881,25 @@
   <!-- PRODUCTEN -->
   <section id="producten" class="apple-section">
     <p class="kicker reveal">Digitale producten</p>
-    <h2 class="reveal">Tools die wij<br>zelf hebben gebouwd.</h2>
+    <h2 class="reveal">Business XL<br>Producten.</h2>
     <p class="lead reveal">Naast ons advies- en managementwerk ontwikkelt Business XL digitale producten die dagelijkse problemen oplossen.</p>
 
     <div class="producten-grid">
       <div class="product-card reveal">
-        <div class="product-logo">⚡</div>
+        <div class="product-logo tst">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#2563eb"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
         <div class="product-name">TimeSaverTools</div>
         <p class="product-tagline">Een groeiende collectie slimme tools voor ZZP'ers en professionals. Van cv-builder tot vergadernotulen — dagelijkse klusjes geautomatiseerd zodat jij je tijd beter besteedt.</p>
         <a href="https://timesavertools.nl" target="_blank" class="product-link">timesavertools.nl →</a>
       </div>
       <div class="product-card reveal">
-        <div class="product-logo">📬</div>
+        <div class="product-logo nmpk">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="5" width="20" height="14" rx="2"/>
+            <path d="M2 5l10 8 10-8"/>
+          </svg>
+        </div>
         <div class="product-name">NooitMeerPostKwijt</div>
         <p class="product-tagline">Scan je post, ontvang direct een analyse en sla alles automatisch op in de juiste map in je eigen cloud. Nooit meer een halfuur zoeken naar die ene belangrijke brief.</p>
         <a href="https://nooitmeerpostkwijt.nl" target="_blank" class="product-link">nooitmeerpostkwijt.nl →</a>
